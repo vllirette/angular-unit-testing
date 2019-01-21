@@ -4,6 +4,7 @@ import { HeroService } from "../hero.service";
 import { HeroComponent } from "../hero/hero.component";
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { of } from "rxjs";
+import { By } from "@angular/platform-browser";
 
 describe('HeroesComponent (deep tests)', () => {
     let fixture: ComponentFixture<HeroesComponent>;
@@ -35,8 +36,17 @@ describe('HeroesComponent (deep tests)', () => {
         fixture.detectChanges(); //initialize the components (parent & child)
     });
 
-    it('should be true if true', () => {
-        expect(true).toBe(true);
+    it('should render each hero as a HeroComponent', () => {
+        //beforeEach -> heroService.getHeroes
+
+        //detechChanges -> run ngOnInit()
+
+        const heroComponentDebugEl = fixture.debugElement.queryAll(By.directive(HeroComponent)); //<app-hero> nodes
+        expect(heroComponentDebugEl.length).toEqual(3);
+        for (let i = 0; i < heroComponentDebugEl.length; i++) {
+            expect(heroComponentDebugEl[i].componentInstance.hero).toEqual(HEROES[i]);
+
+        }
     });
-    
+
 });
