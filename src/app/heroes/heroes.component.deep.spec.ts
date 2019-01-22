@@ -49,4 +49,19 @@ describe('HeroesComponent (deep tests)', () => {
         }
     });
 
+    it(`shoudl call heroService.deleteHero when the HeroComponent's 
+        delete button is clicked`, () => {
+        spyOn(fixture.componentInstance, 'delete');
+        //beforeEach -> heroService.getHeroes
+
+        //detechChanges -> run ngOnInit()
+
+        const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent)); //<app-hero> nodes in html
+        heroComponents[0].query(By.css('button'))
+          .triggerEventHandler('click', { stopPropagation: ()=>{} });
+        
+        expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
+    });
+
+
 });
