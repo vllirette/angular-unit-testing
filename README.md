@@ -1,7 +1,8 @@
 # Pluralsight's Unit Testing in Angular Course
-This course is up to date.
 
-To get started, clone the repo or download it
+Original [repository](https://github.com/joeeames/PSAngularUnitTestingCourse)
 
-npm install
-npm test
+To get started, 
+
+- npm install
+- npm test
