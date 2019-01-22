@@ -89,9 +89,8 @@ describe('HeroesComponent (deep tests)', () => {
         addButton.triggerEventHandler('click', null);
         fixture.detectChanges();
         
-        //const heroText = fixture.debugElement.query(By.css('ul')).nativeElement.textContext;
+        //const heroText = fixture.debugElement.query(By.css('ul')).nativeElement.textContent;
         //expect(heroText).toContain(name);
-        // code from tuto ^ didn't work so replaced with the one below
         expect(fixture.componentInstance.heroes.length).toBe(4);
         expect(fixture.componentInstance.heroes[3].name).toBe(name);
     });
