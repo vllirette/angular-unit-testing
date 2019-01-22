@@ -10,11 +10,11 @@ import { By } from "@angular/platform-browser";
     selector: '[routerLink]',
     host: { '(click)': 'onClick()' }
 })
-export class RouterLinkDirectiveStub{
+export class RouterLinkDirectiveStub {
     @Input('routerLink') linkParams: any;
     navigatedTo: any = null;
-    
-    onClick(){
+
+    onClick() {
         this.navigatedTo = this.linkParams;
     }
 }
@@ -75,7 +75,7 @@ describe('HeroesComponent (deep tests)', () => {
                 .triggerEventHandler('click', { stopPropagation: () => { } });
 
             expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
-    });
+        });
 
     it(`shoudl call heroService.deleteHero when the HeroComponent's 
     delete event is emitted`, () => {
@@ -89,24 +89,36 @@ describe('HeroesComponent (deep tests)', () => {
             //heroComponents[0].triggerEventHandler('delete', null); //debug element will emit the delete event
 
             expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
-    });
+        });
 
     it('should add new hero to the hero list when the add button is clicked', () => {
         //beforeEach -> heroService.getHeroes
         //detechChanges -> run ngOnInit()
         const name = "Mr.Ice";
-        mockHeroService.addHero.and.returnValue(of({id: 4, name: name, strength: 4}));
+        mockHeroService.addHero.and.returnValue(of({ id: 4, name: name, strength: 4 }));
         let inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
         const addButton = fixture.debugElement.queryAll(By.css('button'))[0];
 
         inputElement.value = name;
         addButton.triggerEventHandler('click', null);
         fixture.detectChanges();
-        
+
         //const heroText = fixture.debugElement.query(By.css('ul')).nativeElement.textContent;
         //expect(heroText).toContain(name);
         expect(fixture.componentInstance.heroes.length).toBe(4);
         expect(fixture.componentInstance.heroes[3].name).toBe(name);
+    });
+
+    it('should have the correct route for the first hero', () => {
+        //beforeEach -> heroService.getHeroes
+        //detechChanges -> run ngOnInit()
+        const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent));
+
+        let routerLink = heroComponents[0].query(By.directive(RouterLinkDirectiveStub)).injector.get(RouterLinkDirectiveStub);
+
+        heroComponents[0].query(By.css('a')).triggerEventHandler('click', null);
+
+        expect(routerLink.navigatedTo).toBe('/detail/1');
     });
 
 
