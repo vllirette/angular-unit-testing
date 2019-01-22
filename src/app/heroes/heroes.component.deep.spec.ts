@@ -61,7 +61,7 @@ describe('HeroesComponent (deep tests)', () => {
                 .triggerEventHandler('click', { stopPropagation: () => { } });
 
             expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
-        });
+    });
 
     it(`shoudl call heroService.deleteHero when the HeroComponent's 
     delete event is emitted`, () => {
@@ -72,9 +72,10 @@ describe('HeroesComponent (deep tests)', () => {
 
             const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent)); //<app-hero> nodes in html
             (<HeroComponent>heroComponents[0].componentInstance).delete.emit(undefined);
+            //heroComponents[0].triggerEventHandler('delete', null); //debug element will emit the delete event
 
             expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
-        });
+    });
 
 
 });
