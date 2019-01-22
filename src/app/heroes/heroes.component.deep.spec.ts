@@ -51,17 +51,30 @@ describe('HeroesComponent (deep tests)', () => {
 
     it(`shoudl call heroService.deleteHero when the HeroComponent's 
         delete button is clicked`, () => {
-        spyOn(fixture.componentInstance, 'delete');
-        //beforeEach -> heroService.getHeroes
+            spyOn(fixture.componentInstance, 'delete');
+            //beforeEach -> heroService.getHeroes
 
-        //detechChanges -> run ngOnInit()
+            //detechChanges -> run ngOnInit()
 
-        const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent)); //<app-hero> nodes in html
-        heroComponents[0].query(By.css('button'))
-          .triggerEventHandler('click', { stopPropagation: ()=>{} });
-        
-        expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
-    });
+            const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent)); //<app-hero> nodes in html
+            heroComponents[0].query(By.css('button'))
+                .triggerEventHandler('click', { stopPropagation: () => { } });
+
+            expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
+        });
+
+    it(`shoudl call heroService.deleteHero when the HeroComponent's 
+    delete event is emitted`, () => {
+            spyOn(fixture.componentInstance, 'delete');
+            //beforeEach -> heroService.getHeroes
+
+            //detechChanges -> run ngOnInit()
+
+            const heroComponents = fixture.debugElement.queryAll(By.directive(HeroComponent)); //<app-hero> nodes in html
+            (<HeroComponent>heroComponents[0].componentInstance).delete.emit(undefined);
+
+            expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
+        });
 
 
 });
