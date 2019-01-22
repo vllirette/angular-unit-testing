@@ -77,5 +77,25 @@ describe('HeroesComponent (deep tests)', () => {
             expect(fixture.componentInstance.delete).toHaveBeenCalledWith(HEROES[0]);
     });
 
+    it('should add new hero to the hero list when the add button is clicked', () => {
+        //beforeEach -> heroService.getHeroes
+        //detechChanges -> run ngOnInit()
+        const name = "Mr.Ice";
+        mockHeroService.addHero.and.returnValue(of({id: 4, name: name, strength: 4}));
+        let inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+        const addButton = fixture.debugElement.queryAll(By.css('button'))[0];
+
+        inputElement.value = name;
+        addButton.triggerEventHandler('click', null);
+        fixture.detectChanges();
+        
+        //const heroText = fixture.debugElement.query(By.css('ul')).nativeElement.textContext;
+        //expect(heroText).toContain(name);
+        // code from tuto ^ didn't work so replaced with the one below
+        expect(fixture.componentInstance.heroes.length).toBe(4);
+        expect(fixture.componentInstance.heroes[3].name).toBe(name);
+    });
+
+
 
 });
